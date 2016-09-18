@@ -1,0 +1,2 @@
+class GOCDDataFetchException < Exception
+end
