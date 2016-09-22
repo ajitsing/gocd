@@ -6,7 +6,7 @@ require_relative './lib/gocd/version.rb'
 Gem::Specification.new do |s|
   s.name                        =   'gocd'
   s.version                     =   GOCD::VERSION
-  s.date                        =   '2016-09-18'
+  s.date                        =   '2016-09-22'
   s.summary                     =   'Get info from gocd using its apis'
   s.description                 =   s.summary
   s.authors                     =   ['Ajit Singh']
@@ -20,4 +20,5 @@ Gem::Specification.new do |s|
   s.require_paths               =   ["lib"]
 
   s.add_dependency                  'activesupport'
+  s.add_dependency                  'json'
 end
