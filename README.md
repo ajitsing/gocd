@@ -38,12 +38,12 @@ idle_agents.each { |agent| agent.name }
 
 ###### To get all the missing agents:
 ```ruby
-idle_agents = GOCD::Agents.missing
+GOCD::Agents.missing
 ```
 
 ###### To get all the disabled agents:
 ```ruby
-idle_agents = GOCD::Agents.disabled
+GOCD::Agents.disabled
 ```
 
 
