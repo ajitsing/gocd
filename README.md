@@ -3,11 +3,15 @@
 [![Gem Version](https://badge.fury.io/rb/gocd.svg)](https://badge.fury.io/rb/gocd)
 
 ### Installation
-```gem 'gocd'```
+```ruby
+gem 'gocd'
+```
 
 or
 
-```gem install gocd```
+```bash
+gem install gocd
+```
 
 ### Usage
 
