@@ -53,7 +53,7 @@ module GOCD
     end
 
     def environments
-      @responsep['environments']
+      @response['environments']
     end
 
     def has_environment(env)
