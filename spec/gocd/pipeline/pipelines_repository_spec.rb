@@ -32,6 +32,7 @@ RSpec.describe GOCD::PipelineRepository, 'pipelines' do
   end
 
   it '#pipelines should raise GOCDDataFetchException exception' do
+    GOCD::PipelineRepository.instance_variable_set(:@pipelines, nil)
     setup_credential_and_server
     curl_command = 'curl -s -k -u admin:password http://gocd.com/go/cctray.xml'
     empty_response = ''
