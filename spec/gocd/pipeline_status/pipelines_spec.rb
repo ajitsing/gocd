@@ -1,5 +1,5 @@
-require './lib/gocd/pipeline/pipelines'
-require_relative '../../../lib/gocd/pipeline/pipeline_repository'
+require './lib/gocd/pipeline_status/pipelines'
+require_relative '../../../lib/gocd/pipeline_status/pipeline_repository'
 
 def mock_pipeline_repository
   pipeline1 = instance_double("Pipeline", :red? => true, :green? => false, :status => 'failing', :name => 'pipeline1')

@@ -1,4 +1,4 @@
-require './lib/gocd/pipeline/pipeline'
+require './lib/gocd/pipeline_status/pipeline'
 
 RSpec.describe GOCD::Pipeline, 'pipeline' do
 

@@ -1,4 +1,4 @@
-require_relative '../../../lib/gocd/pipeline/pipeline_repository'
+require_relative '../../../lib/gocd/pipeline_status/pipeline_repository'
 require_relative '../../../lib/gocd/config/credentials'
 require_relative '../../../lib/gocd/config/server'
 require_relative '../../../lib/gocd/exception/data_fetch_exception'
