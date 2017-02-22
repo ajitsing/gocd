@@ -12,6 +12,10 @@ module GOCD
         @name = data['name']
         @resources = data['resources'].nil? ? [] : data['resources']['resource']
       end
+
+      def pipeline=(new_name)
+        @pipeline = new_name
+      end
     end
   end
 end

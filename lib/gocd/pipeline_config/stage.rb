@@ -12,6 +12,11 @@ module GOCD
         @jobs = to_jobs(data['jobs']['job'])
       end
 
+      def pipeline=(new_name)
+        @pipeline = new_name
+        @jobs.each { |job| job.pipeline = new_name }
+      end
+
       private
       def to_jobs(data)
         to_array(data).map { |job| GOCD::PIPELINE_CONFIG::Job.new(pipeline, name, job) }

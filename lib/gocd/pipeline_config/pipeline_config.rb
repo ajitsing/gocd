@@ -8,7 +8,7 @@ module GOCD
     @config_response = nil
 
     def environments
-      raw_environments = pipeline_config_response["cruise"]["environments"]["environment"]
+      raw_environments = to_array(pipeline_config_response["cruise"]["environments"]["environment"])
       environments = raw_environments.map do |environment|
         GOCD::PIPELINE_CONFIG::Environment.new(environment)
       end
@@ -18,11 +18,17 @@ module GOCD
     end
 
     def pipelines
-      groups.map { |group| group.pipelines }.flatten
+      pipelines = groups.map { |group| group.pipelines }.flatten
+      merge_pipelines_with_templates pipelines, templates
+    end
+
+    def templates
+      raw_templates = to_array(pipeline_config_response["cruise"]["templates"]["pipeline"])
+      raw_templates.map { |template| GOCD::PIPELINE_CONFIG::Template.new(template) }
     end
 
     def groups
-      raw_groups = pipeline_config_response['cruise']['pipelines']
+      raw_groups = to_array(pipeline_config_response['cruise']['pipelines'])
       raw_groups.map do |group|
         GOCD::PIPELINE_CONFIG::PipelineGroup.new(group)
       end
@@ -45,6 +51,22 @@ module GOCD
         end
         environment.enrich_with_pipelines pipelines_for_env.flatten.compact
       end
+    end
+
+    def merge_pipelines_with_templates(pipelines, templates)
+      pipeline_with_templates = pipelines.select { |p| p.has_template? }
+      standalone_pipelines = pipelines - pipeline_with_templates
+
+      pipelines_merged_with_templates = pipeline_with_templates.map do |pwt|
+        matched_template = templates.select { |t| t.name.upcase == pwt.template.upcase }
+        if matched_template.size > 0
+          matched_template.first.name = pwt.name
+          matched_template
+        else
+          pwt
+        end
+      end
+      [standalone_pipelines + pipelines_merged_with_templates].flatten.compact
     end
   end
 end
