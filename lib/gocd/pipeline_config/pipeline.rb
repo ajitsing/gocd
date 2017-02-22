@@ -4,9 +4,10 @@ module GOCD
   module PIPELINE_CONFIG
     class Pipeline
       include GOCD::PIPELINE_CONFIG
-      attr_reader :name, :stages
+      attr_reader :name, :stages, :template
 
       def initialize(data)
+        @template = data['template']
         @name = data['name']
         @stages = to_stages(data['stage']) || []
       end

@@ -39,11 +39,24 @@ RSpec.describe GOCD::PIPELINE_CONFIG::Pipeline, 'Pipeline' do
     </pipeline>
   PipelineGroup
 
+  template_pipline = <<-PipelineGroup
+    <pipeline name="MyAwesomePipeline" isLocked="false" template="MyAwesomeTemplate">
+    </pipeline>
+  PipelineGroup
+
   it 'should parse pipeline' do
     response = Hash.from_xml(xml_response)
     pipeline = GOCD::PIPELINE_CONFIG::Pipeline.new response['pipeline']
 
     expect(pipeline.name).to eq 'MyAwesomePipeline'
     expect(pipeline.stages.size).to eq 2
+  end
+
+  it 'should parse pipeline created from template' do
+    response = Hash.from_xml(template_pipline)
+    pipeline = GOCD::PIPELINE_CONFIG::Pipeline.new response['pipeline']
+
+    expect(pipeline.name).to eq 'MyAwesomePipeline'
+    expect(pipeline.template).to eq 'MyAwesomeTemplate'
   end
 end
