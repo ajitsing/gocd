@@ -8,7 +8,7 @@ module GOCD
 
     private
     def self.fetch
-      raw_agents = `curl -s -k -u #{GOCD.credentials.curl_credentials} #{GOCD.server.url}/go/api/agents -H 'Accept: application/vnd.go.cd.v4+json'`
+      raw_agents = `curl -s -k -u #{GOCD.credentials.curl_credentials} #{GOCD.server.url}/go/api/agents -H 'Accept: application/vnd.go.cd.v2+json'`
       to_agents raw_agents
     end
 
