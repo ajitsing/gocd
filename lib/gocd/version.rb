@@ -1,3 +1,3 @@
 module GOCD
-  VERSION = '0.5'
+  VERSION = '1.0'
 end
