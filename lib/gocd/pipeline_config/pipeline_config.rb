@@ -1,7 +1,7 @@
-require './lib/gocd/pipeline_config/environment'
-require './lib/gocd/pipeline_config/pipeline_group'
-require './lib/gocd/pipeline_config/pipeline'
-require './lib/gocd/pipeline_config/repository/pipeline_config_repository'
+require_relative './environment'
+require_relative './pipeline_group'
+require_relative './pipeline'
+require_relative './repository/pipeline_config_repository'
 
 module GOCD
   module PIPELINE_CONFIG
