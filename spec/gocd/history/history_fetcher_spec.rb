@@ -2,6 +2,8 @@ require_relative '../../../lib/gocd/history/history_fetcher'
 require_relative '../../../lib/gocd/config/credentials'
 require_relative '../../../lib/gocd/config/server'
 require_relative '../../../lib/gocd/pipeline_config/job'
+require 'rest-client'
+require 'ostruct'
 
 def setup_credential_and_server
   GOCD.credentials = GOCD::Credentials.new 'admin', 'password'
@@ -16,8 +18,13 @@ RSpec.describe GOCD::HistoryFetcher, 'history' do
   before(:each) do
     setup_credential_and_server
     params = "pipelineName=#{job.pipeline}&stageName=#{job.stage}&jobName=#{job.name}&limitPipeline=latest&limitCount=#{1}"
-    curl_command = "curl -s -k -u admin:password \"http://gocd.com/go/properties/search?#{params}\""
-    expect(GOCD::HistoryFetcher).to receive(:`).with(curl_command).and_return(response)
+    request = {
+        method: :get,
+        url: "http://gocd.com/go/properties/search?#{params}",
+        user: 'admin',
+        password: 'password',
+    }
+    expect(RestClient::Request).to receive(:execute).with(request).and_return(OpenStruct.new({body: response}))
   end
 
   it 'should fetch history of a job' do
