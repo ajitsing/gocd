@@ -10,7 +10,7 @@ module GOCD
         @pipeline = pipeline
         @stage = stage
         @name = data['name']
-        @resources = data['resources'].nil? ? [] : data['resources']['resource']
+        @resources = data['resources'].nil? ? [] : to_array(data['resources']['resource'])
       end
 
       def pipeline=(new_name)

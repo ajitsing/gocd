@@ -1,3 +1,5 @@
+require 'active_support/core_ext/hash/conversions'
+
 module GOCD
   module PIPELINE_CONFIG
     class PipelineConfigRepository
