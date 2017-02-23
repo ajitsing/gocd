@@ -56,7 +56,7 @@ RSpec.describe GOCD::AgentRepository, 'agent' do
 
   it '#agents should return all agent' do
     setup_credential_and_server
-    curl_command = "curl -s -k -u admin:password http://gocd.com/go/api/agents -H 'Accept: application/vnd.go.cd.v2+json'"
+    curl_command = "curl -s -k -u admin:password http://gocd.com/go/api/agents -H 'Accept: application/vnd.go.cd.v4+json'"
     expect(GOCD::AgentRepository).to receive(:`).with(curl_command).and_return(response_json)
 
     agents = GOCD::AgentRepository.agents
@@ -71,7 +71,7 @@ RSpec.describe GOCD::AgentRepository, 'agent' do
   it '#agents should raise GOCDDataFetchException exception' do
     GOCD::AgentRepository.instance_variable_set(:@agents, nil)
     setup_credential_and_server
-    curl_command = "curl -s -k -u admin:password http://gocd.com/go/api/agents -H 'Accept: application/vnd.go.cd.v2+json'"
+    curl_command = "curl -s -k -u admin:password http://gocd.com/go/api/agents -H 'Accept: application/vnd.go.cd.v4+json'"
     expect(GOCD::AgentRepository).to receive(:`).with(curl_command).and_return(nil)
 
     expect{GOCD::AgentRepository.agents}.to raise_error(GOCDDataFetchException).with_message('Could not fetch data from server!!')
