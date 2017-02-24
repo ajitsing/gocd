@@ -4,12 +4,18 @@ module GOCD
   module PIPELINE_CONFIG
     class Stage
       include GOCD::PIPELINE_CONFIG
-      attr_reader :pipeline, :name, :jobs
+      attr_reader :pipeline, :name, :jobs, :environment
 
       def initialize(pipeline, data)
         @pipeline = pipeline
         @name = data['name']
         @jobs = data['jobs'].nil? ? [] : to_jobs(data['jobs']['job'])
+      end
+
+
+      def environment=(env)
+        @environment = env
+        @jobs.each { |job| job.environment = env }
       end
 
       def pipeline=(new_name)

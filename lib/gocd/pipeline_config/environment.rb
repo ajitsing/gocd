@@ -16,6 +16,7 @@ module GOCD
       end
 
       def enrich_with_pipelines(pipelines)
+        pipelines.each { |pipeline| pipeline.environment = name }
         @pipelines = pipelines
       end
 

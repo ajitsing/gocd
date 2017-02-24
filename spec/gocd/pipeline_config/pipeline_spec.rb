@@ -59,4 +59,14 @@ RSpec.describe GOCD::PIPELINE_CONFIG::Pipeline, 'Pipeline' do
     expect(pipeline.name).to eq 'MyAwesomePipeline'
     expect(pipeline.template).to eq 'MyAwesomeTemplate'
   end
+
+  it 'should update environment in stages' do
+    stage = instance_double('stage')
+    expect(GOCD::PIPELINE_CONFIG::Stage).to receive(:new).and_return(stage)
+    pipeline = GOCD::PIPELINE_CONFIG::Pipeline.new({'stage' => [stage]})
+
+    expect(stage).to receive(:environment=).with('Env')
+
+    pipeline.environment = 'Env'
+  end
 end

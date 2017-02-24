@@ -24,4 +24,14 @@ RSpec.describe GOCD::PIPELINE_CONFIG::Environment, 'Environment' do
     expect(environment.pipeline_names.first).to eq 'Pipeline1'
     expect(environment.pipeline_names.last).to eq 'Pipeline2'
   end
+
+  it 'should update environment in pipeline' do
+    response = Hash.from_xml(xml_response)
+    environment = GOCD::PIPELINE_CONFIG::Environment.new response['environment']
+
+    pipeline = instance_double('pipeline')
+    expect(pipeline).to receive(:environment=).with('Env')
+
+    environment.enrich_with_pipelines([pipeline])
+  end
 end

@@ -4,7 +4,7 @@ module GOCD
   module PIPELINE_CONFIG
     class Pipeline
       include GOCD::PIPELINE_CONFIG
-      attr_reader :name, :stages, :template
+      attr_reader :name, :stages, :template, :environment
 
       def initialize(data)
         @template = data['template']
@@ -19,6 +19,11 @@ module GOCD
       def name=(new_name)
         @name = new_name
         @stages.each { |stage| stage.pipeline = new_name }
+      end
+
+      def environment=(env)
+        @environment = env
+        @stages.each { |stage| stage.environment = env }
       end
 
       private
