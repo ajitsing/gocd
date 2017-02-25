@@ -20,11 +20,12 @@ module GOCD
       }
 
       begin
-        response = RestClient::Request.execute(request).body
+        res = RestClient::Request.execute(request)
+        response = res.body unless res.nil?
       rescue => e
         error = <<-ERROR
           Could not fetch history for #{job.pipeline}::#{job.stage}::#{job.name}
-          Response received from server: #{e.response.body}
+          Response received from server: #{e.response}
         ERROR
         response = nil
         puts error
