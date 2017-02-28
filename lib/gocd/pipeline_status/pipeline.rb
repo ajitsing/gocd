@@ -23,5 +23,21 @@ module GOCD
     def green?
       @pipeline['lastBuildStatus'] == 'Success'
     end
+
+    def web_url
+      @pipeline['webUrl']
+    end
+
+    def last_build_time
+      @pipeline['lastBuildTime']
+    end
+
+    def last_build_label
+      @pipeline['lastBuildLabel']
+    end
+
+    def to_hash
+      @pipeline
+    end
   end
 end

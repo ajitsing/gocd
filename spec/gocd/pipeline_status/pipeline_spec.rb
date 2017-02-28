@@ -4,7 +4,7 @@ RSpec.describe GOCD::Pipeline, 'pipeline' do
 
   context 'when last build status is success' do
     before(:each) do
-      @raw_pipeline = { 'name' => 'pipeline 1', 'activity' => 'sleeping', 'lastBuildStatus' => 'Success' }
+      @raw_pipeline = {'name' => 'pipeline 1', 'activity' => 'sleeping', 'lastBuildStatus' => 'Success'}
     end
 
     it '#name should return name' do
@@ -30,7 +30,7 @@ RSpec.describe GOCD::Pipeline, 'pipeline' do
 
   context 'when last build status is failure' do
     before(:each) do
-      @raw_pipeline = { 'name' => 'pipeline 1', 'activity' => 'sleeping', 'lastBuildStatus' => 'Failure' }
+      @raw_pipeline = {'name' => 'pipeline 1', 'activity' => 'sleeping', 'lastBuildStatus' => 'Failure'}
     end
 
     it '#green? should return false' do
@@ -44,4 +44,17 @@ RSpec.describe GOCD::Pipeline, 'pipeline' do
     end
   end
 
+  it 'should have other details' do
+    @raw_pipeline = {
+        'name' => 'pipeline 1', 'activity' => 'sleeping',
+        'lastBuildStatus' => 'Success', 'webUrl' => 'http://someurl.com',
+        'lastBuildLabel' => 'lable', 'lastBuildTime' => '2017-02-28'
+    }
+
+    pipeline = GOCD::Pipeline.new @raw_pipeline
+    expect(pipeline.web_url).to eq('http://someurl.com')
+    expect(pipeline.last_build_time).to eq('2017-02-28')
+    expect(pipeline.last_build_label).to eq('lable')
+    expect(pipeline.to_hash).to eq(@raw_pipeline)
+  end
 end
