@@ -25,7 +25,7 @@ module GOCD
       rescue => e
         error = <<-ERROR
           Could not fetch history for #{job.pipeline}::#{job.stage}::#{job.name}
-          Response received from server: #{e.response}
+          Response received from server: #{e}
         ERROR
         response = nil
         puts error
