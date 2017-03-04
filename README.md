@@ -37,6 +37,19 @@ pipelines.status
 pipelines.any_red?
 ```
 
+#### Want to create your own gocd dashboard? Its easy now!
+```ruby
+require 'sinatra'
+require 'gocd'
+
+get '/' do
+  GOCD.server = GOCD::Server.new 'http://goserverurl.com'
+  GOCD.credentials = GOCD::Credentials.new 'username', 'password'
+  GOCD::AllPipelines.red_pipelines.map {|pipeline| pipeline.to_hash}.to_json
+end
+```
+
+#### Go Agents
 ###### To get all the idle agents:
 ```ruby
 idle_agents = GOCD::Agents.idle
@@ -81,37 +94,61 @@ module GOCD
 
     def pipeline_config_response
     end
-  end
-end
-
-module GOCD
-  module PIPELINE_CONFIG
+    
     class Environment
-      attr_reader :name, :pipelines, :pipeline_names
-    end
-  end
-end
+      def name
+      end
 
-module GOCD
-  module PIPELINE_CONFIG
+      def pipelines
+      end
+
+      def pipeline_names
+      end
+    end
+
     class Pipeline
-      attr_reader :name, :stages, :template, :environment
-    end
-  end
-end
+      def name
+      end
 
-module GOCD
-  module PIPELINE_CONFIG
+      def stages
+      end
+
+      def template
+      end
+
+      def environment
+      end
+    end
+
     class Stage
-      attr_reader :pipeline, :name, :jobs, :environment
-    end
-  end
-end
+      def name
+      end
 
-module GOCD
-  module PIPELINE_CONFIG
+      def pipeline
+      end
+
+      def jobs
+      end
+
+      def environment
+      end
+    end
+
     class Job
-      attr_reader :pipeline, :stage, :name, :resources, :environment
+      def name
+      end
+
+      def pipeline
+      end
+
+      def stage
+      end
+
+      def resources
+      end
+
+      def environment
+      end
     end
   end
 end
