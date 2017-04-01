@@ -1,0 +1,8 @@
+language: ruby
+rvm:
+  - 2.3.1
+  - ruby
+
+before_install:
+  - rvm install 2.3.1
+  - rvm use 2.3.1
