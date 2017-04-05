@@ -1,5 +1,6 @@
 # gocd
 
+[![LICENSE](https://img.shields.io/badge/license-Apache-blue.svg)](https://github.com/ajitsing/gocd/blob/master/LICENSE.txt)
 [![Gem Version](https://badge.fury.io/rb/gocd.svg)](https://badge.fury.io/rb/gocd)
 [![Build Status](https://travis-ci.org/ajitsing/gocd.svg?branch=master)](https://travis-ci.org/ajitsing/gocd)
 
@@ -69,90 +70,32 @@ GOCD::Agents.disabled
 
 #### Pipeline Configuration
 
-###### To get all the environments
+###### Get all the environments
 ```ruby
 include GOCD::PIPELINE_CONFIG
 
-environments #return all the environments and the whole hierarchy of it
-jobs = environments.map(&:pipelines).flatten.map(&:stages).flatten.map(&:jobs).flatten
+environments #returns all the environments and the whole hierarchy of it
 ```
 
-##### APIs provided by GOCD::PIPELINE_CONFIG
+###### Get all the pipelines
 ```ruby
-module GOCD
-  module PIPELINE_CONFIG
-    def environments
-    end
+include GOCD::PIPELINE_CONFIG
 
-    def pipelines
-    end
+pipelines = environments.map(&:pipelines).flatten
+```
 
-    def templates
-    end
+###### Get all the stages
+```ruby
+include GOCD::PIPELINE_CONFIG
 
-    def groups
-    end
+stages = environments.map(&:pipelines).flatten.map(&:stages).flatten
+```
 
-    def pipeline_config_response
-    end
-    
-    class Environment
-      def name
-      end
+###### Get all the jobs
+```ruby
+include GOCD::PIPELINE_CONFIG
 
-      def pipelines
-      end
-
-      def pipeline_names
-      end
-    end
-
-    class Pipeline
-      def name
-      end
-
-      def stages
-      end
-
-      def template
-      end
-
-      def environment
-      end
-    end
-
-    class Stage
-      def name
-      end
-
-      def pipeline
-      end
-
-      def jobs
-      end
-
-      def environment
-      end
-    end
-
-    class Job
-      def name
-      end
-
-      def pipeline
-      end
-
-      def stage
-      end
-
-      def resources
-      end
-
-      def environment
-      end
-    end
-  end
-end
+jobs = environments.map(&:pipelines).flatten.map(&:stages).flatten.map(&:jobs).flatten
 ```
 
 #### History Fetcher
