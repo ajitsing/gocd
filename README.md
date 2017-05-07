@@ -2,6 +2,7 @@
 
 [![LICENSE](https://img.shields.io/badge/license-Apache-blue.svg)](https://github.com/ajitsing/gocd/blob/master/LICENSE.txt)
 [![Gem Version](https://badge.fury.io/rb/gocd.svg)](https://badge.fury.io/rb/gocd)
+![Gem Downloads](http://ruby-gem-downloads-badge.herokuapp.com/gocd?type=total)
 [![Build Status](https://travis-ci.org/ajitsing/gocd.svg?branch=master)](https://travis-ci.org/ajitsing/gocd)
 
 ### Installation
