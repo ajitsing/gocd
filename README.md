@@ -4,7 +4,7 @@
 [![Gem Version](https://badge.fury.io/rb/gocd.svg)](https://badge.fury.io/rb/gocd)
 ![Gem Downloads](http://ruby-gem-downloads-badge.herokuapp.com/gocd?type=total)
 [![Build Status](https://travis-ci.org/ajitsing/gocd.svg?branch=master)](https://travis-ci.org/ajitsing/gocd)
-[![Twitter](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/Ajit5ingh)
+[![Twitter Follow](https://img.shields.io/twitter/follow/Ajit5ingh.svg?style=social)](https://twitter.com/Ajit5ingh)
 
 ### Installation
 ```ruby
