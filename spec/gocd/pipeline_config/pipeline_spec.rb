@@ -50,6 +50,7 @@ RSpec.describe GOCD::PIPELINE_CONFIG::Pipeline, 'Pipeline' do
 
     expect(pipeline.name).to eq 'MyAwesomePipeline'
     expect(pipeline.stages.size).to eq 2
+    expect(pipeline.params.keys.size).to eq 0
   end
 
   it 'should parse pipeline created from template' do
@@ -68,5 +69,39 @@ RSpec.describe GOCD::PIPELINE_CONFIG::Pipeline, 'Pipeline' do
     expect(stage).to receive(:environment=).with('Env')
 
     pipeline.environment = 'Env'
+  end
+
+  it 'should parse pipeline params' do
+    pipeline_with_params = <<-Pipeline
+    <pipeline name="ChildPipeline" isLocked="false" template="pipeline_template">
+      <params>
+        <param name="MODULE_NAME">Module1</param>
+        <param name="UPSTREAM_PIPELINE">ParentPipeline</param>
+      </params>
+    </pipeline>
+    Pipeline
+
+    response = CobraVsMongoose.xml_to_hash(pipeline_with_params)
+    pipeline = GOCD::PIPELINE_CONFIG::Pipeline.new response['pipeline']
+
+    expect(pipeline.params.keys.size).to eq 2
+    expect(pipeline.params['MODULE_NAME']).to eq 'Module1'
+    expect(pipeline.params['UPSTREAM_PIPELINE']).to eq 'ParentPipeline'
+  end
+
+  it 'should parse pipeline with one param' do
+    pipeline_with_params = <<-Pipeline
+    <pipeline name="ChildPipeline" isLocked="false" template="pipeline_template">
+      <params>
+        <param name="MODULE_NAME">Module1</param>
+      </params>
+    </pipeline>
+    Pipeline
+
+    response = CobraVsMongoose.xml_to_hash(pipeline_with_params)
+    pipeline = GOCD::PIPELINE_CONFIG::Pipeline.new response['pipeline']
+
+    expect(pipeline.params.keys.size).to eq 1
+    expect(pipeline.params['MODULE_NAME']).to eq 'Module1'
   end
 end
