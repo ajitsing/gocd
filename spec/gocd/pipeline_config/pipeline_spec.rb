@@ -1,5 +1,5 @@
 require './lib/gocd/pipeline_config/pipeline_group'
-require 'active_support/core_ext/hash/conversions'
+require 'cobravsmongoose'
 
 RSpec.describe GOCD::PIPELINE_CONFIG::Pipeline, 'Pipeline' do
   xml_response = <<-PipelineGroup
@@ -45,7 +45,7 @@ RSpec.describe GOCD::PIPELINE_CONFIG::Pipeline, 'Pipeline' do
   PipelineGroup
 
   it 'should parse pipeline' do
-    response = Hash.from_xml(xml_response)
+    response = CobraVsMongoose.xml_to_hash(xml_response)
     pipeline = GOCD::PIPELINE_CONFIG::Pipeline.new response['pipeline']
 
     expect(pipeline.name).to eq 'MyAwesomePipeline'
@@ -53,7 +53,7 @@ RSpec.describe GOCD::PIPELINE_CONFIG::Pipeline, 'Pipeline' do
   end
 
   it 'should parse pipeline created from template' do
-    response = Hash.from_xml(template_pipline)
+    response = CobraVsMongoose.xml_to_hash(template_pipline)
     pipeline = GOCD::PIPELINE_CONFIG::Pipeline.new response['pipeline']
 
     expect(pipeline.name).to eq 'MyAwesomePipeline'

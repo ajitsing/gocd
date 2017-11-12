@@ -1,5 +1,5 @@
 require './lib/gocd/pipeline_config/pipeline_group'
-require 'active_support/core_ext/hash/conversions'
+require 'cobravsmongoose'
 
 RSpec.describe GOCD::PIPELINE_CONFIG::Stage, 'Stage' do
   xml_response = <<-PipelineGroup
@@ -22,7 +22,7 @@ RSpec.describe GOCD::PIPELINE_CONFIG::Stage, 'Stage' do
   PipelineGroup
 
   it 'should parse job' do
-    response = Hash.from_xml(xml_response)
+    response = CobraVsMongoose.xml_to_hash(xml_response)
     stage = GOCD::PIPELINE_CONFIG::Stage.new 'MyAwesomePipeline', response['job']
 
     expect(stage.name).to eq 'build'

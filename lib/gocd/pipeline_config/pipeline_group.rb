@@ -7,7 +7,7 @@ module GOCD
       attr_reader :name, :pipelines
 
       def initialize(group_data)
-        @name = group_data['group']
+        @name = group_data['@group']
         @pipelines = to_pipelines(group_data['pipeline']) || []
       end
 

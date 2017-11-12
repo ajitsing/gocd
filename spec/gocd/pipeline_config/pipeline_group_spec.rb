@@ -1,5 +1,5 @@
 require './lib/gocd/pipeline_config/pipeline_group'
-require 'active_support/core_ext/hash/conversions'
+require 'cobravsmongoose'
 
 RSpec.describe GOCD::PIPELINE_CONFIG::PipelineGroup, 'PipelineGroup' do
   pipeline_group_xml = <<-PipelineGroup
@@ -42,7 +42,7 @@ RSpec.describe GOCD::PIPELINE_CONFIG::PipelineGroup, 'PipelineGroup' do
   PipelineGroup
 
   it 'should parse pipeline group' do
-    response = Hash.from_xml(pipeline_group_xml)
+    response = CobraVsMongoose.xml_to_hash(pipeline_group_xml)
     pipeline_group = GOCD::PIPELINE_CONFIG::PipelineGroup.new response['pipelines']
 
     expect(pipeline_group.name).to eq 'MyPipelineGroup'

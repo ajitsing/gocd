@@ -1,5 +1,5 @@
 require './lib/gocd/pipeline_config/template'
-require 'active_support/core_ext/hash/conversions'
+require 'cobravsmongoose'
 
 RSpec.describe GOCD::PIPELINE_CONFIG::Template, 'Template' do
   xml_response = <<-Template
@@ -20,7 +20,7 @@ RSpec.describe GOCD::PIPELINE_CONFIG::Template, 'Template' do
   Template
 
   it 'should parse template' do
-    response = Hash.from_xml(xml_response)
+    response = CobraVsMongoose.xml_to_hash(xml_response)
     pipeline = GOCD::PIPELINE_CONFIG::Template.new response['templates']['pipeline']
 
     expect(pipeline.name).to eq 'MyPipeline'

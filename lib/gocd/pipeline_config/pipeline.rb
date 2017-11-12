@@ -7,8 +7,8 @@ module GOCD
       attr_reader :name, :stages, :template, :environment
 
       def initialize(data)
-        @template = data['template']
-        @name = data['name']
+        @template = data['@template']
+        @name = data['@name']
         @stages = to_stages(data['stage']) || []
       end
 

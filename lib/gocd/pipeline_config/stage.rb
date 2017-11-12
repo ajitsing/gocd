@@ -8,7 +8,7 @@ module GOCD
 
       def initialize(pipeline, data)
         @pipeline = pipeline
-        @name = data['name']
+        @name = data['@name']
         @jobs = data['jobs'].nil? ? [] : to_jobs(data['jobs']['job'])
       end
 

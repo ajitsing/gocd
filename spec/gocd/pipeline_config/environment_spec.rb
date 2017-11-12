@@ -1,5 +1,5 @@
 require './lib/gocd/pipeline_config/pipeline_group'
-require 'active_support/core_ext/hash/conversions'
+require 'cobravsmongoose'
 
 RSpec.describe GOCD::PIPELINE_CONFIG::Environment, 'Environment' do
   xml_response = <<-PipelineGroup
@@ -16,7 +16,7 @@ RSpec.describe GOCD::PIPELINE_CONFIG::Environment, 'Environment' do
   PipelineGroup
 
   it 'should parse environment' do
-    response = Hash.from_xml(xml_response)
+    response = CobraVsMongoose.xml_to_hash(xml_response)
     environment = GOCD::PIPELINE_CONFIG::Environment.new response['environment']
 
     expect(environment.name).to eq 'Env'
@@ -26,7 +26,7 @@ RSpec.describe GOCD::PIPELINE_CONFIG::Environment, 'Environment' do
   end
 
   it 'should update environment in pipeline' do
-    response = Hash.from_xml(xml_response)
+    response = CobraVsMongoose.xml_to_hash(xml_response)
     environment = GOCD::PIPELINE_CONFIG::Environment.new response['environment']
 
     pipeline = instance_double('pipeline')

@@ -13,7 +13,7 @@ end
 RSpec.describe GOCD::HistoryFetcher, 'history' do
 
   response = "cruise_agent,cruise_job_duration,cruise_job_id,cruise_job_result,cruise_pipeline_counter,cruise_pipeline_label,cruise_stage_counter,cruise_timestamp_01_scheduled,cruise_timestamp_02_assigned,cruise_timestamp_03_preparing,cruise_timestamp_04_building,cruise_timestamp_05_completing,cruise_timestamp_06_completed,tests_failed_count,tests_ignored_count,tests_total_count,tests_total_duration\nAgent1,320,826882,Passed,10314,pipe-10314-job-5621,1,2017-02-23T14:49:17Z,2017-02-23T14:49:22Z,2017-02-23T14:49:33Z,2017-02-23T14:49:41Z,2017-02-23T14:54:39Z,2017-02-23T14:55:02Z,0,0,4218,84.882\n"
-  job = GOCD::PIPELINE_CONFIG::Job.new('Pipeline', 'stage', {'name' => 'job'})
+  job = GOCD::PIPELINE_CONFIG::Job.new('Pipeline', 'stage', {'@name' => 'job'})
 
   before(:each) do
     setup_credential_and_server

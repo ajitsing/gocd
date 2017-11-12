@@ -7,7 +7,7 @@ module GOCD
       attr_reader :name, :pipelines, :pipeline_names
 
       def initialize(environment)
-        @name = environment['name']
+        @name = environment['@name']
         @pipeline_names = to_pipelines(environment["pipelines"] || {})
       end
 
@@ -23,7 +23,7 @@ module GOCD
       private
       def to_pipelines(pipelines)
         pipes = pipelines["pipeline"] || []
-        to_array(pipes).map { |p| p['name'] } unless pipes.nil?
+        to_array(pipes).map { |p| p['@name'] } unless pipes.nil?
       end
     end
   end
