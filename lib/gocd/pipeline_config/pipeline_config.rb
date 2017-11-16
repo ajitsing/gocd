@@ -19,7 +19,7 @@ module GOCD
 
     def pipelines
       pipelines = groups.map { |group| group.pipelines }.flatten
-      merge_pipelines_with_templates pipelines, templates
+      merge_pipelines_with_templates pipelines
     end
 
     def templates
@@ -53,20 +53,24 @@ module GOCD
       end
     end
 
-    def merge_pipelines_with_templates(pipelines, templates)
-      pipeline_with_templates = pipelines.select { |p| p.has_template? }
-      standalone_pipelines = pipelines - pipeline_with_templates
+    def merge_pipelines_with_templates(pipelines)
+      pipelines_with_template = pipelines.select { |p| p.has_template? }
+      pipelines_with_template.map! do |p|
+        template = template_for_pipeline(p)
+        next if template.nil?
+        template.name = p.name
+        template.stages.each { |s| s.pipeline = p.name }
+        template
+      end.compact!
 
-      pipelines_merged_with_templates = pipeline_with_templates.map do |pwt|
-        matched_template = templates.select { |t| t.name.upcase == pwt.template.upcase }
-        if matched_template.size > 0
-          matched_template.first.name = pwt.name
-          matched_template
-        else
-          pwt
-        end
-      end
-      [standalone_pipelines + pipelines_merged_with_templates].flatten.compact
+      pipelines_without_template = pipelines.select { |p| !p.has_template? }
+      [pipelines_with_template + pipelines_without_template].flatten.compact
+    end
+
+    def template_for_pipeline(pipeline)
+      template = templates.select { |t| t.name == pipeline.template }.first
+      p "Could not find any template for #{pipeline.name}:#{pipeline.template}" if template.nil?
+      template
     end
   end
 end
