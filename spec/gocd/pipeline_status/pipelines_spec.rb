@@ -1,5 +1,6 @@
 require './lib/gocd/pipeline_status/pipelines'
 require_relative '../../../lib/gocd/pipeline_status/pipeline_repository'
+require_relative '../../../lib/gocd/exception/pipelines_not_found_exception'
 
 def mock_pipeline_repository
   pipeline1 = instance_double("Pipeline", :red? => true, :green? => false, :status => 'failing', :name => 'pipeline1')
@@ -75,6 +76,12 @@ RSpec.describe GOCD::AllPipelines, 'pipelines' do
       mock_pipeline_repository_with_green_pipelines
       pipeline_group = GOCD::PipelineGroup.new %w(pipeline1 pipeline2)
       expect(pipeline_group.any_red?).to be_falsy
+    end
+
+    it '#red_pipelines? should throw PipelinesNotFoundException when any of the pipeline is not present in the go response' do
+      mock_pipeline_repository_with_green_pipelines
+      pipeline_group = GOCD::PipelineGroup.new %w(pipeline1 pipeline3)
+      expect{pipeline_group.any_red?}.to raise_error(PipelinesNotFoundException).with_message("Could not find [\"pipeline3\"]")
     end
   end
 end

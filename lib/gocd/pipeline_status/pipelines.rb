@@ -54,6 +54,18 @@ module GOCD
 
     def pipelines
       all_pipelines = GOCD::PipelineRepository.pipelines
+      missing_pipelines = []
+      @pipelines.select do |pipeline|
+        if all_pipelines.find { |p| p.name == pipeline }.nil?
+          missing_pipelines << pipeline
+        end
+      end
+
+      unless missing_pipelines.empty?
+        exception = PipelinesNotFoundException.new(missing_pipelines)
+        raise exception, exception.message
+      end
+
       @pipelines.map do |pipeline|
         all_pipelines.find { |p| p.name == pipeline }
       end
