@@ -1,3 +1,5 @@
+require 'shellwords'
+
 module GOCD
   class Credentials
     attr_reader :username, :password
@@ -8,7 +10,7 @@ module GOCD
     end
 
     def curl_credentials
-      "#{@username}:#{@password}"
+      Shellwords.escape("#{@username}:#{@password}")
     end
   end
 
