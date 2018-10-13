@@ -2,6 +2,7 @@
 
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=102)](https://opensource.org/licenses/Apache-2.0)
 [![Gem Version](https://badge.fury.io/rb/gocd.svg)](https://badge.fury.io/rb/gocd)
+[![HitCount](http://hits.dwyl.io/ajitsing/gocd.svg)](http://hits.dwyl.io/ajitsing/gocd)
 ![Gem Downloads](http://ruby-gem-downloads-badge.herokuapp.com/gocd?type=total)
 [![Build Status](https://travis-ci.org/ajitsing/gocd.svg?branch=master)](https://travis-ci.org/ajitsing/gocd)
 [![Twitter Follow](https://img.shields.io/twitter/follow/Ajit5ingh.svg?style=social)](https://twitter.com/Ajit5ingh)
