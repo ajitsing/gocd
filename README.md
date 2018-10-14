@@ -1,5 +1,6 @@
 # gocd
 
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/ajitsing/gocd/graphs/commit-activity)
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=102)](https://opensource.org/licenses/Apache-2.0)
 [![Gem Version](https://badge.fury.io/rb/gocd.svg)](https://badge.fury.io/rb/gocd)
 [![HitCount](http://hits.dwyl.io/ajitsing/gocd.svg)](http://hits.dwyl.io/ajitsing/gocd)
