@@ -43,6 +43,18 @@ RSpec.describe GOCD::AllPipelines, 'pipelines' do
       mock_pipeline_repository_with_green_pipelines
       expect(GOCD::AllPipelines.any_red?).to be_falsy
     end
+
+    context 'cache' do
+      it 'should not fetch latest pipelines when cache is enabled' do
+        mock_pipeline_repository
+
+        GOCD::AllPipelines.pipelines(cache: false)
+        GOCD::AllPipelines.any_red?(cache: true)
+        GOCD::AllPipelines.red_pipelines(cache: true)
+        GOCD::AllPipelines.green_pipelines(cache: true)
+        GOCD::AllPipelines.status(cache: true)
+      end
+    end
   end
 
 
@@ -82,6 +94,44 @@ RSpec.describe GOCD::AllPipelines, 'pipelines' do
       mock_pipeline_repository_with_green_pipelines
       pipeline_group = GOCD::PipelineGroup.new %w(pipeline1 pipeline3)
       expect{pipeline_group.any_red?}.to raise_error(PipelinesNotFoundException).with_message("Could not find [\"pipeline3\"]")
+    end
+
+    context 'cache' do
+      it 'should not fetch latest pipelines when cache is enabled' do
+        pipeline = instance_double("Pipeline", :red? => false, :green? => true, :status => 'passing', :name => 'pipeline1')
+        expect(GOCD::PipelineRepository).to receive(:pipelines).once.and_return([pipeline])
+
+        pipeline_group = GOCD::PipelineGroup.new %w(pipeline1)
+
+        pipeline_group.pipelines(cache: true)
+        pipeline_group.any_red?(cache: true)
+        pipeline_group.red_pipelines(cache: true)
+        pipeline_group.green_pipelines(cache: true)
+        pipeline_group.status(cache: true)
+      end
+
+      it 'should not fetch latest pipelines when cache is enabled during initialization' do
+        pipeline = instance_double("Pipeline", :red? => false, :green? => true, :status => 'passing', :name => 'pipeline1')
+        expect(GOCD::PipelineRepository).to receive(:pipelines).once.and_return([pipeline])
+
+        pipeline_group = GOCD::PipelineGroup.new %w(pipeline1), cache: true
+
+        pipeline_group.pipelines
+        pipeline_group.any_red?
+        pipeline_group.red_pipelines
+        pipeline_group.green_pipelines
+        pipeline_group.status
+      end
+
+      it 'should fetch latest pipelines when cache is disabled during api call' do
+        pipeline = instance_double("Pipeline", :red? => false, :green? => true, :status => 'passing', :name => 'pipeline1')
+        expect(GOCD::PipelineRepository).to receive(:pipelines).twice.and_return([pipeline])
+
+        pipeline_group = GOCD::PipelineGroup.new %w(pipeline1), cache: true
+
+        pipeline_group.pipelines
+        pipeline_group.any_red?(cache: false)
+      end
     end
   end
 end
