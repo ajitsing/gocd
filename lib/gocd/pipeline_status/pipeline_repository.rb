@@ -3,7 +3,7 @@ require 'active_support/core_ext/hash/conversions'
 module GOCD
   class PipelineRepository
     def self.pipelines
-      @pipelines ||= fetch_data
+      fetch_data
     end
 
     private
