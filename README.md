@@ -43,6 +43,23 @@ pipelines.status
 pipelines.any_red?
 ```
 
+#### Cache
+By default all methods in ```GOCD::AllPipelines``` and ```GOCD::PipelineGroup``` make a call to go api to fetch the latest status of pipelines. This can be avoided using cache. To enable cache just pass ```cache: true``` when you call any of the method in ```GOCD::AllPipelines``` and ```GOCD::PipelineGroup```.
+
+```ruby
+GOCD::AllPipelines.any_red?(cache: true)
+GOCD::AllPipelines.red_pipelines(cache: true)
+GOCD::AllPipelines.green_pipelines(cache: true)
+GOCD::AllPipelines.status(cache: true)
+```
+
+```ruby
+pipelines = GOCD::PipelineGroup.new(['Pipeline1 :: stage1'], cache: true)
+pipelines.red_pipelines # will return red pipelines from cache
+pipelines.status # will return pipelines status from cache
+pipelines.any_red?(cache: false) # will check with the latest pipelines
+```
+
 #### Want to create your own gocd dashboard? Its easy now!
 ```ruby
 require 'sinatra'
@@ -51,7 +68,7 @@ require 'gocd'
 get '/' do
   GOCD.server = GOCD::Server.new 'http://goserverurl.com'
   GOCD.credentials = GOCD::Credentials.new 'username', 'password'
-  GOCD::AllPipelines.red_pipelines.map {|pipeline| pipeline.to_hash}.to_json
+  GOCD::AllPipelines.red_pipelines(cache: false).map {|pipeline| pipeline.to_hash}.to_json
 end
 ```
 
