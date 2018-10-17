@@ -1,3 +1,5 @@
+raise 'Ruby should be >= 2.3' unless RUBY_VERSION.to_f >= 2.3
+
 source :rubygems
 
 gem 'activesupport'
