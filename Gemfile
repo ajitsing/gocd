@@ -1,9 +1,9 @@
-ruby '2.3.1'
+ruby '2.4.0'
 
 source :rubygems
 
 gem 'activesupport'
 gem 'cobravsmongoose', '0.0.2'
-gem 'rspec', '~> 3.0'
+gem 'rspec'
 gem 'rake'
 gem 'rest-client'
