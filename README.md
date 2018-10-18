@@ -20,7 +20,7 @@ gem install gocd
 ```
 
 ### Code Documentation
-http://www.rubydoc.info/gems/gocd/1.2.1
+http://www.rubydoc.info/gems/gocd/1.3
 
 ### Usage
 
