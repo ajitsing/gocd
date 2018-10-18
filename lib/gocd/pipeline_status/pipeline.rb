@@ -13,7 +13,7 @@ module GOCD
     end
 
     def status
-      {pipeline: name, status: last_build_status}
+      {pipeline: name, status: current_status}
     end
 
     def red?
@@ -38,6 +38,10 @@ module GOCD
 
     def to_hash
       @pipeline
+    end
+
+    def current_status
+      (@pipeline['activity'] && @pipeline['activity'].downcase == 'sleeping') ? last_build_status : @pipeline['activity']
     end
   end
 end
