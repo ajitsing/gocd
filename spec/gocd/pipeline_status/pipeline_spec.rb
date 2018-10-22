@@ -69,44 +69,34 @@ RSpec.describe GOCD::Pipeline, 'pipeline' do
   end
 
   context 'when a previously successful pipeline is running' do
-    before(:each) do
-      @raw_pipeline = {'name' => 'pipeline 1', 'activity' => 'Building', 'lastBuildStatus' => 'Success'}
-    end
+    let(:raw_pipeline) { {'name' => 'pipeline 1', 'activity' => 'Building', 'lastBuildStatus' => 'Success'} }
 
     it '#status should be building' do
-      @pipeline = GOCD::Pipeline.new @raw_pipeline
-      expect(@pipeline.status).to eq({pipeline: 'pipeline 1', status: 'Building'})
+      expect(GOCD::Pipeline.new(raw_pipeline).status).to eq({pipeline: 'pipeline 1', status: 'Building'})
     end
 
     it '#green? should return true' do
-      @pipeline = GOCD::Pipeline.new @raw_pipeline
-      expect(@pipeline.green?).to be_truthy
+      expect(GOCD::Pipeline.new(raw_pipeline).green?).to be_truthy
     end
 
     it '#red? should return false' do
-      @pipeline = GOCD::Pipeline.new @raw_pipeline
-      expect(@pipeline.red?).to be_falsey
+      expect(GOCD::Pipeline.new(raw_pipeline).red?).to be_falsey
     end
   end
 
   context 'when a previously failed pipeline is running' do
-    before(:each) do
-      @raw_pipeline = {'name' => 'pipeline 1', 'activity' => 'Building', 'lastBuildStatus' => 'Failure'}
-    end
+    let(:raw_pipeline) { {'name' => 'pipeline 1', 'activity' => 'Building', 'lastBuildStatus' => 'Failure'} }
 
     it '#status should be building' do
-      @pipeline = GOCD::Pipeline.new @raw_pipeline
-      expect(@pipeline.status).to eq({pipeline: 'pipeline 1', status: 'Building'})
+      expect(GOCD::Pipeline.new(raw_pipeline).status).to eq({pipeline: 'pipeline 1', status: 'Building'})
     end
 
     it '#green? should return false' do
-      @pipeline = GOCD::Pipeline.new @raw_pipeline
-      expect(@pipeline.green?).to be_falsey
+      expect(GOCD::Pipeline.new(raw_pipeline).green?).to be_falsey
     end
 
     it '#red? should return true' do
-      @pipeline = GOCD::Pipeline.new @raw_pipeline
-      expect(@pipeline.red?).to be_truthy
+      expect(GOCD::Pipeline.new(raw_pipeline).red?).to be_truthy
     end
   end
 end
